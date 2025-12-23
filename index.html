@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>✨ Новогодний сайт ✨</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="video-container">
+    <video class="background-video" id="video-greeting" muted playsinline loop><source src="video/1.mp4" type="video/mp4"></video>
+    <video class="background-video" id="video-greeting_1" muted playsinline loop><source src="video/1_1.mp4" type="video/mp4"></video>
+    <video class="background-video" id="video-game" muted playsinline loop><source src="video/2.mp4" type="video/mp4"></video>
+    <video class="background-video" id="video-game_1" muted playsinline loop><source src="video/2_2.mp4" type="video/mp4"></video>
+    <video class="background-video" id="video-gallery" muted playsinline loop><source src="video/3.mp4" type="video/mp4"></video>
+    <video class="background-video" id="video-gallery_1" muted playsinline loop><source src="video/3_3.mp4" type="video/mp4"></video>
+  </div>
+
+  <header class="glass-header">
+
+    
+    <div class="logo">🎄 С Новым годом 🎄</div>
+    
+    <nav class="glass-nav">
+	    <div class="header-left">
+      <div class="candy-counter glass-panel">
+        🍬 <span id="candy-count">0</span> / 3
+      </div>
+      <button class="reset-btn glass-button" onclick="resetProgress()" title="Сбросить прогресс">🔄</button>
+    </div>
+      <button class="tab-button active" data-tab="greeting">Поздравление</button>
+      <button class="tab-button" data-tab="game">Мини-игры</button>
+      <button class="tab-button" data-tab="gallery">Галерея</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="greeting" class="tab-content active">
+      <div id="greeting-lock" class="glass-lock">
+        <div class="lock-content">
+          <h1>🔒 Закрыто</h1>
+          <p>Собери 3 конфеты в мини-играх,<br>чтобы прочитать поздравление!</p>
+          <div class="lock-progress">Нужно еще конфет: <span id="candies-needed">3</span></div>
+        </div>
+      </div>
+
+      <div id="greeting-text" class="snow-text glass-card blurred-content">
+        <center>
+          <h2>🎄 С Новым годом! ✨</h2>
+          <p>Пусть этот год принесёт тебе кучу весёлых моментов,</p>
+          <p>горы счастья и океан удачи!</p>
+          <p>Желаю, чтобы шампанское пенилось от смеха,</p>
+          <p>мечты исполнялись быстрее, чем ты успеешь их загадать,</p>
+          <p>а проблемы прятались от тебя,</p>
+          <p>как снеговик от солнца! ☃️💫</p>
+          <p>Будь такой же яркой, смешной и неповторимой,</p>
+          <p>как новогодняя ёлка с гирляндами! 🪩🎁</p>
+          <p>Люблю, обнимаю и желаю только</p>
+          <p>огненных приключений в новом году! 🔥💃</p>
+        </center>
+      </div>
+    </section>
+
+<section id="game" class="tab-content">
+      
+      <div id="games-menu" class="games-menu-wrapper active">
+        <h2>Выбери игру</h2>
+        <div class="games-grid">
+          
+          <div class="game-card glass-card" onclick="openGame('wordsearch')">
+            <div class="card-icon">🔍</div>
+            <h3>Поиск слов</h3>
+            <p>Найди 3 спрятанных слова</p>
+          </div>
+
+          <div class="game-card glass-card" onclick="openGame('wordle')">
+            <div class="card-icon">🧩</div>
+            <h3>Wordle</h3>
+            <p>Угадай слово из 5 букв</p>
+          </div>
+
+          <div class="game-card glass-card" onclick="openGame('diffs')">
+            <div class="card-icon">👀</div>
+            <h3>Найди отличия</h3>
+            <p>Найди 5 отличий на фото</p>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="games-play-area" class="games-play-area">
+        
+        <button class="back-btn glass-button" onclick="backToMenu()">⬅ Вернуться к играм</button>
+
+        <div id="game-wordsearch" class="game-view glass-card">
+          <h3>Найди 3 слова</h3>
+          <p class="instruction">Проведи пальцем или мышкой по буквам:<br><b>2026, ОГНЕННАЯ, ЛОШАДЬ</b></p>
+          <div id="ws-grid" class="ws-grid"></div>
+          <div class="game-footer">
+             <button class="hint-btn glass-button" onclick="useHint('ws')">💡 Подсказка (<span id="ws-hints">2</span>)</button>
+          </div>
+        </div>
+
+        <div id="game-wordle" class="game-view glass-card">
+          <h3>Угадай новогоднее слово (5 букв)</h3>
+          <div id="wordle-board" class="wordle-board"></div>
+          <div id="wordle-keyboard" class="wordle-keyboard"></div>
+          <div class="game-footer">
+             <button class="glass-button" onclick="initWordle()">🔄 Новое слово</button>
+          </div>
+        </div>
+
+        <div id="game-diffs" class="game-view glass-card">
+          <h3>Найди 5 отличий</h3>
+          <div class="diff-wrapper">
+            <div class="diff-area" id="diff-area">
+               <img src="images/100.jpg" alt="Original" class="diff-img">
+               <img src="images/101.jpg" alt="Changed" class="diff-img">
+               <div class="diff-overlay" id="diff-overlay"></div>
+            </div>
+          </div>
+          <div class="game-footer">
+             <button class="hint-btn glass-button" onclick="useHint('diff')">💡 Подсказка (<span id="diff-hints">2</span>)</button>
+             <div id="diff-count">Найдено: <span id="diff-found">0</span>/5</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="gallery" class="tab-content">
+      <div class="explorer glass-card">
+        <aside class="folders glass-sidebar">
+          <div class="folder" data-open="photos"><h3>📁 Фотографии</h3></div>
+          <div class="folder" data-open="videos"><h3>📁 Видео</h3></div>
+        </aside>
+        <section class="content-area">
+          <div class="panel" id="panel-left">
+            <div class="panel-header">
+              <strong id="panel-title">Откройте папку</strong>
+              <div class="zoom-center-wrapper">
+  <div class="zoom-wrap fancy-zoom">
+    <div class="zoom-track"></div>
+    <div class="zoom-thumb"></div>
+  </div>
+  </div>
+            </div>
+            <div class="thumbs grid" id="thumbs"></div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="music-player glass-player">
+    <div class="player-header">
+      <div class="music-title" id="track-title">🎵 Новогоднее настроение</div>
+      <button class="toggle-btn" onclick="togglePlayer()">⏷</button>
+    </div>
+    <div id="player-body" class="player-body">
+      <audio id="player" controls></audio>
+      <div class="controls">
+        <button onclick="prevTrack()">⏮</button>
+        <button onclick="nextTrack()">⏭</button>
+      </div>
+    </div>
+  </div>
+
+<div id="modal" class="modal" aria-hidden="true">
+    <button class="nav left" id="modal-prev">‹</button>
+    <div class="modal-inner">
+      <div id="modal-content" class="modal-content"></div>
+    </div>
+    <button class="nav right" id="modal-next">›</button>
+    <button class="close" id="modal-close">×</button>
+  </div>
+<canvas id="fireworksCanvas"></canvas>
+
+<div class="fireworks-box-container" onclick="launchFireworks()">
+    <div class="fireworks-box">
+        🧨
+        <span class="sparkle">✨</span>
+    </div>
+    <div class="box-label">Салют</div>
+</div>
+  <script src="js/script.js"></script>
+  <script src="js/video.js"></script>
+  <script src="js/slider.js"></script>
+  <script src="js/mini-games.js"></script>
+  <script src="js/firework.js"></script>
+</body>
+</html>
