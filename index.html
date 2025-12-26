@@ -4,15 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>✨ Новогодний сайт ✨</title>
+
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
+
 <body>
+
+<!-- ================= ПК ВЕРСИЯ (ВЕСЬ ТВОЙ САЙТ) ================= -->
+<div class="desktop-only">
+
+<!-- ===== НАЧАЛО ТВОЕГО КОДА (БЕЗ ИЗМЕНЕНИЙ) ===== -->
+
 <div class="garland-vk" id="myGarland">
     <div class="garland-thread"></div>
     <ul class="garland-lights">
-        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
-        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li>
     </ul>
     <div class="garland-pull" onclick="toggleGarland()">
         <div class="pull-thread"></div>
@@ -242,5 +252,20 @@
         garland.classList.toggle('is-off');
     }
 </script>
+</div>
+<!-- ================= КОНЕЦ ПК ВЕРСИИ ================= -->
+
+
+<!-- ================= МОБИЛЬНАЯ БЛОКИРОВКА ================= -->
+<div class="mobile-only">
+    <div class="mobile-box">
+        <h1> Этот сайт временно недоступен<br>
+            с мобильных устройств.<br><br>
+            Пожалуйста, открой его<br>
+            с компьютера 💻</h1>
+
+    </div>
+</div>
+<!-- ======================================================== -->
 </body>
 </html>

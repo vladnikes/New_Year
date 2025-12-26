@@ -1560,53 +1560,47 @@ main {
 }
 	
 
-/* ---------- Адаптив ---------- */
-@media (max-width: 900px) {
-  .slider { width:92%; height:520px }
-  .slider-container { flex-direction: column }
-  .nav { width:54px; height:54px }
-  .music-player { left:50%; right:auto; transform:translateX(-50%); width:92%; max-width:420px }
+/* ===== БЛОКИРОВКА МОБИЛЬНЫХ ===== */
+.mobile-only {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+
+    background: url("https://images.unsplash.com/photo-1543589077-47d81606c1bf")
+                center / cover no-repeat;
+    color: #fff;
 }
 
-@media (max-width: 600px) {
-  header{ padding:16px }
-  .tab-button{ padding:9px 12px; font-size:14px }
-  .slider{ height:380px; border-radius:16px }
-  .caption{ font-size:13px; bottom:14px }
-  .music-player{ bottom:12px; right:12px; width:88% }
-  .logo{ font-size:2rem }
-  .player-body{ max-height:120px }
-  .slider { height:400px } /* из оригинала */
-  nav { flex-direction: column; gap:8px }
-  .prev { margin-right: 0; margin-bottom: 5px; }
-  .next { margin-left: 0; margin-top: 5px; }
+.mobile-only::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
 }
 
-#player,
-#player-body,
-#track-title {
-  cursor: url('../icons/Christmas.png'), auto !important;
+.mobile-box {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
 }
 
-/* для всех интерактивных элементов плеера */
-.play-btn,
-.pause-btn,
-.next-btn,
-.prev-btn,
-.toggle-btn,
-button,
-audio {
-  cursor: url('../icons/House.png'), pointer !important;
+@media (max-width: 1300px) {
+    .desktop-only {
+        display: none !important;
+    }
+
+    .mobile-only {
+        display: block;
+    }
+
+    body {
+        overflow: hidden;
+    }
 }
-
-/* если кнопки у тебя просто <div> с onclick, добавим им ховер */
-.play-btn:hover,
-.pause-btn:hover,
-.next-btn:hover,
-.prev-btn:hover,
-.toggle-btn:hover {
-  cursor: url('../icons/House.png'), pointer !important;
-}
-
-
 
