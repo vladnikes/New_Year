@@ -8,6 +8,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
+<div class="garland-vk" id="myGarland">
+    <div class="garland-thread"></div>
+    <ul class="garland-lights">
+        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+    </ul>
+    <div class="garland-pull" onclick="toggleGarland()">
+        <div class="pull-thread"></div>
+        <div class="pull-handle"></div>
+    </div>
+</div>
+
+
   <div class="video-container">
     <video class="background-video" id="video-greeting" muted playsinline loop><source src="video/1.mp4" type="video/mp4"></video>
     <video class="background-video" id="video-greeting_1" muted playsinline loop><source src="video/1_1.mp4" type="video/mp4"></video>
@@ -177,17 +190,57 @@
   </div>
 <canvas id="fireworksCanvas"></canvas>
 
-<div class="fireworks-box-container" onclick="launchFireworks()">
-    <div class="fireworks-box">
-        🧨
-        <span class="sparkle">✨</span>
-    </div>
-    <div class="box-label">Салют</div>
+<div class="bottom-widgets">
+  <div class="widget-box" onclick="openFortuneModal()">
+      <div class="widget-icon">🔮</div>
+      <div class="box-label">Судьба</div>
+  </div>
+  
+  <div class="widget-box" onclick="launchFireworks()">
+      <div class="widget-icon">🧨<span class="sparkle">✨</span></div>
+      <div class="box-label">Салют</div>
+  </div>
 </div>
+
+<div id="fortune-modal" class="fortune-modal" aria-hidden="true">
+  <div class="ios26-card">
+    <button class="close-fortune-floating" onclick="closeFortuneModal()">✕</button>
+
+    <h2 class="fortune-header">Что ждет тебя в 2026?</h2>
+
+    <div class="ball-container" id="ball-container">
+       <img src="images/snow_ball.png" alt="Magic Ball" class="magic-ball-img">
+       
+       <div class="prediction-overlay">
+          <div id="globe-message" class="glowing-text">
+            Потряси шар
+          </div>
+       </div>
+    </div>
+
+    <div class="fortune-controls">
+      <button class="liquid-button" onclick="shakeAndPredict()">
+        <span class="btn-text">Потрясти</span>
+        <div class="liquid-bg"></div>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+
   <script src="js/script.js"></script>
   <script src="js/video.js"></script>
   <script src="js/slider.js"></script>
   <script src="js/mini-games.js"></script>
   <script src="js/firework.js"></script>
+  <script src="js/garland.js"></script>
+  <script>
+    function toggleGarland() {
+        const garland = document.getElementById('myGarland');
+        garland.classList.toggle('is-off');
+    }
+</script>
 </body>
 </html>

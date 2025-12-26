@@ -1236,6 +1236,329 @@ main {
         50% { transform: rotate(180deg) scale(1.2); opacity: 0.8; }
         100% { transform: rotate(360deg) scale(1); opacity: 1; }
     }
+	
+	
+	/* --- ГИРЛЯНДА VK STYLE --- */
+.garland-vk {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 50px;
+        z-index: 10001; pointer-events: none;
+    }
+
+    .garland-thread {
+        position: absolute; top: 0; width: 100%; height: 2px;
+        background: rgba(255,255,255,0.1);
+    }
+
+    .garland-lights {
+        display: flex; justify-content: space-around;
+        padding: 0; margin: 0; list-style: none;
+    }
+
+    .garland-lights li {
+        width: 10px; height: 16px;
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        position: relative; top: 2px;
+        animation: vk-flash 2s infinite;
+        transition: all 0.5s ease;
+    }
+
+    /* --- Эффект разного ракурса (наклона) --- */
+    .garland-lights li:nth-child(odd) { transform: rotate(15deg); }
+    .garland-lights li:nth-child(even) { transform: rotate(-15deg); }
+    .garland-lights li:nth-child(3n) { transform: rotate(-5deg) translateY(3px); }
+    .garland-lights li:nth-child(5n) { transform: rotate(20deg) translateY(2px); }
+
+    /* Цвета и свечение */
+    .garland-lights li:nth-child(4n+1) { background: #007bff; color: #007bff; animation-delay: 0s; }
+    .garland-lights li:nth-child(4n+2) { background: #ff4d4d; color: #ff4d4d; animation-delay: 0.5s; }
+    .garland-lights li:nth-child(4n+3) { background: #ffcc00; color: #ffcc00; animation-delay: 1s; }
+    .garland-lights li:nth-child(4n+4) { background: #28a745; color: #28a745; animation-delay: 1.5s; }
+
+    @keyframes vk-flash {
+        0%, 100% { opacity: 0.3; filter: brightness(0.6); box-shadow: none; }
+        50% { opacity: 1; filter: brightness(1.3); box-shadow: 0 0 15px currentColor; }
+    }
+
+    /* --- ВЫКЛЮЧЕННОЕ СОСТОЯНИЕ --- */
+    .garland-vk.is-off .garland-lights li { 
+        animation: none; 
+        background: #333 !important; 
+        opacity: 0.4; 
+        box-shadow: none !important;
+    }
+
+/* Контейнер веревочки */
+.garland-pull {
+    position: absolute; 
+    right: 50px; 
+    top: 0;
+    width: 30px; 
+    height: auto; 
+    cursor: pointer; 
+    pointer-events: auto;
+    z-index: 10002;
+    transform-origin: top center;
+    animation: rope-swing 4s ease-in-out infinite;
+}
+
+/* Сама нить */
+.pull-thread { 
+    width: 3px; 
+    height: 100px; /* Исходная длина */
+    margin: 0 auto;
+    background: repeating-linear-gradient(
+        45deg,
+        #777,
+        #777 2px,
+        #999 2px,
+        #999 4px
+    );
+    /* Плавный переход для эффекта растягивания */
+    transition: height 0.1s ease-out; 
+    position: relative;
+}
+
+/* Объемная рукоятка */
+.pull-handle { 
+    width: 16px; 
+    height: 24px; 
+    background: radial-gradient(circle at 30% 30%, #fff 0%, #ddd 40%, #888 100%);
+    border-radius: 50% 50% 30% 30%; 
+    margin: -2px auto 0; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    border: 1px solid #999;
+}
+
+/* --- ЭФФЕКТ ТЯГИ (Нажатие) --- */
+.garland-pull:active .pull-thread {
+    height: 140px; /* Увеличиваем длину нити при нажатии */
+    transition: height 0.05s linear; /* Мгновенная реакция на палец/мышь */
+}
+
+/* Небольшой отскок при отпускании (добавляем к основному состоянию нити) */
+.pull-thread {
+    transition: height 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Анимация покачивания в покое */
+@keyframes rope-swing {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(1.5deg); }
+}
+	
+/* --- ШАР ПРЕДСКАЗАНИЙ (Кнопка и Модалка) --- */
+/* --- Контейнер виджетов --- */
+.bottom-widgets {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    display: flex;
+    gap: 15px;
+    z-index: 2000; /* Поверх всего */
+}
+
+.widget-box {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    width: 75px;
+    height: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+.widget-box:hover {
+    transform: translateY(-5px) scale(1.05);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.widget-icon { font-size: 30px; margin-bottom: 2px; }
+.box-label { font-size: 10px; font-family: 'Montserrat', sans-serif; opacity: 0.9; }
+
+/* --- Модальное окно (iOS 26 Style) --- */
+.fortune-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(5, 5, 10, 0.7); /* Темная подложка для контраста */
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+}
+
+.fortune-modal.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Карточка "Стекло будущего" */
+.ios26-card {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    height: 80vh;
+    max-height: 700px;
+    background: linear-gradient(160deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 80px rgba(255, 255, 255, 0.05), inset 0 0 20px rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 60px 20px 20px 20px; /* Увеличили верхний отступ для заголовка */
+    transform: scale(0.95);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.fortune-modal.open .ios26-card {
+    transform: scale(1);
+}
+
+/* Кнопка закрытия: теперь привязана к углу карточки */
+.close-fortune-floating {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px; /* Чуть уменьшил, чтобы выглядело аккуратнее в iOS стиле */
+    color: rgba(255,255,255,0.5);
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10001;
+    transition: all 0.2s;
+}
+.close-fortune-floating:hover { 
+    color: #fff; 
+    transform: scale(1.1); 
+}
+
+/* Контейнер шара */
+.ball-container {
+    position: relative;
+    width: 80%;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0; /* Важно для flex-контейнеров */
+}
+
+/* Картинка шара */
+.magic-ball-img {
+    width: 130%;
+    height: 130%;
+    object-fit: contain; /* Картинка целиком, не обрезается */
+    filter: drop-shadow(0 0 30px rgba(100, 200, 255, 0.3)); /* Неоновое свечение шара */
+}
+
+/* Оверлей текста */
+.prediction-overlay {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 80%;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Фиксированный заголовок сверху */
+.fortune-header {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+    text-align: center;
+    flex-shrink: 0; /* Чтобы не сжимался */
+}
+
+/* Супер-контрастный текст */
+.glowing-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    line-height: 1.4;
+    color: #fff;
+    /* Многослойная тень для максимального контраста на любом фоне */
+    text-shadow: 
+        0 2px 0 #000,
+        0 -1px 0 #000,
+        -1px 0 0 #000,
+        1px 0 0 #000,
+        0 0 20px rgba(255, 255, 255, 0.8),
+        0 0 40px rgba(0, 150, 255, 0.6);
+    transition: opacity 0.3s;
+}
+
+/* --- Кнопка "Хочу еще" (Liquid Button) --- */
+.fortune-controls {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.liquid-button {
+    position: relative;
+    padding: 18px 40px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 50px;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.liquid-button:hover {
+    background: rgba(255,255,255,0.2);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+    border-color: #fff;
+}
+
+.liquid-button:active {
+    transform: scale(0.95);
+}
+
+/* Анимация тряски (более агрессивная) */
+.shake-hard {
+    animation: shakeHard 0.6s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shakeHard {
+    0% { transform: translate(0, 0); }
+    10%, 90% { transform: translate(-4px, -2px) rotate(-3deg); }
+    20%, 80% { transform: translate(4px, 2px) rotate(3deg); }
+    30%, 50%, 70% { transform: translate(-8px, -4px) rotate(-6deg); }
+    40%, 60% { transform: translate(8px, 4px) rotate(6deg); }
+    100% { transform: translate(0, 0); }
+}
+	
 
 /* ---------- Адаптив ---------- */
 @media (max-width: 900px) {
